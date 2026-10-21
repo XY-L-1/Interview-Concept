@@ -58,6 +58,16 @@ export function parseStudioBundle(raw: string): StudioBundle {
     if (!(question.storyIds as string[]).every((id) => storyIds.has(id))) throw new Error("行为题关联了不存在的故事。");
     followUps(question.followUps);
   }
+  if (behavior.competencies !== undefined) {
+    items(behavior.competencies, "能力维度", false);
+    const questionIds = new Set(behavior.questions.map((question) => question.id));
+    for (const competency of behavior.competencies) {
+      strings(competency.questionIds, "能力维度 questionIds", false);
+      strings(competency.storyIds, "能力维度 storyIds", false);
+      if (typeof competency.description !== "string" || typeof competency.practiceGoal !== "string") throw new Error("能力维度缺少说明或练习目标。");
+      if (!(competency.questionIds as string[]).every((id) => questionIds.has(id)) || !(competency.storyIds as string[]).every((id) => storyIds.has(id))) throw new Error("能力维度关联了不存在的问题或故事。");
+    }
+  }
   const moduleIds = new Set(foundations.modules.map((module) => module.id));
   if (foundations.modules.some((module) => typeof module.order !== "number" || !Number.isFinite(module.order))) throw new Error("基础模块需要有效排序。");
   for (const question of foundations.questions) {

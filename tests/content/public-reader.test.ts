@@ -14,7 +14,7 @@ test("published course outline preserves explicit section and question order", a
   const courses = await listPublishedCourses();
   const react = await getPublishedCourse("react");
 
-  assert.equal(courses.length, 10);
+  assert.equal(courses.length, 11);
   assert.equal(courses[0]?.slug, "backend-systems");
   assert.equal(courses.find((course) => course.slug === "react")?.questionCount, 5);
   assert.ok(react);
@@ -39,7 +39,7 @@ test("published course outline preserves explicit section and question order", a
 test("every published question exposes both complete answer experiences", async () => {
   const paths = await listPublishedQuestionParams();
 
-  assert.equal(paths.length, 173);
+  assert.equal(paths.length, 192);
 
   for (const path of paths) {
     const lesson = await getPublishedQuestion(

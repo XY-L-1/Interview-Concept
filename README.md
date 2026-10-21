@@ -12,7 +12,12 @@ lessons also include an interactive backlog model.
 Eight Java/Spring courses restore the complete 160-question original guide,
 including all four paired Chinese/English blocks, original numbering and source
 locations. Five documented wording corrections appear above the preserved text.
-The catalog now has ten public courses and 173 questions.
+The catalog now has eleven public courses and 192 questions. `/review` organizes
+27 core lessons into twelve JD areas, combining the backend course with a new
+nineteen-lesson Java/backend review. It covers Java, Spring, MySQL, Redis, RPC,
+consistency, capacity, availability, debugging, quality, and payment lifecycles.
+Every new lesson includes Chinese teaching, an English answer, recall practice,
+and primary documentation links.
 
 Open `/courses/backend-systems` to learn. Public courses remain available without
 an account. Supabase email login protects `/prepare`, `/prepare/profile`, and
@@ -37,6 +42,23 @@ private payloads are fetched after authorization. Keep private seed files and
 exports outside this public repository. Optional backup and old-record migration
 controls remain available; previous file:// progress requires export from the old
 HTML and import in the corresponding Studio panel.
+
+The preparation hub also exposes all sixteen behavioral competencies and all
+31 questions, with search, a missing-facts filter, role-specific emphasis,
+answer editing, and a speaking timer. Six reusable stories are the evidence bank,
+not a limit on how many interview questions can be practiced. Incomplete drafts
+remain visibly incomplete.
+
+For an offline private study copy, run:
+
+```bash
+node --import tsx scripts/build-offline-review.ts /absolute/private/studio.json /absolute/private/review.html
+```
+
+The output must be outside this public repository. It embeds the private Studio
+and public lessons in one HTML file with no network connections. Open it locally;
+notes stay in that browser and can be backed up in an HTML copy. Offline notes do
+not synchronize with the account. Never commit or deploy the generated file.
 
 The historical architecture HTML remains available at
 `/guides/architecture.html`; its roadmap is explicitly labeled as a past plan.

@@ -7,6 +7,7 @@ import { validateWorkspace, type PreparationWorkspace, type RoleContext } from "
 import { parseStudioBundle, type StudioBundle } from "./studio-model";
 import { roleTemplates } from "./roles";
 import { usePrivateDocument } from "./use-private-document";
+import { BehaviorPracticeMap } from "./behavior-practice-map";
 
 function parseProfile(value: unknown): PreparationWorkspace {
   const result = validateWorkspace(value);
@@ -114,6 +115,10 @@ export function PreparationHub() {
       if (studioLoaded) setStudioDraft(null);
     }}>{roleDraft || studioDraft ? "放弃本页未保存修改并载入云端" : "重新载入云端资料"}</button><span className="self-center text-xs">重新载入前，请先复制需要保留的未保存文本。</span></div></div> : null}
     <p role="status" className="mt-3 min-h-5 text-xs text-teaching">{notice}</p>
+
+    {bundle ? <BehaviorPracticeMap bundle={bundle} company={context?.company ?? "Temu"} dirty={Boolean(studioDraft)} saving={studio.saving}
+      onEdit={(id, answer) => setStudioDraft({ ...bundle, behavior: { ...bundle.behavior, questions: bundle.behavior.questions.map((question) => question.id === id ? { ...question, answer } : question) } })}
+      onSave={async () => { const writing = studioDraft; if (writing && await studio.save(writing)) { setStudioDraft((current) => current === writing ? null : current); setNotice("行为题回答与本页故事修改已保存到私人空间。"); } }} /> : null}
 
     <div className="mt-4 grid items-start gap-6 xl:grid-cols-[minmax(0,1fr)_minmax(350px,.98fr)]">
       <section aria-labelledby="stories-heading">

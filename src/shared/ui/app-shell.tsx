@@ -13,7 +13,8 @@ export function AppShell({ owner, children }: { owner: { id: string; email: stri
   const isLesson = pathname.includes("/questions/");
   const inPreparation = pathname === "/prepare" || pathname.startsWith("/prepare/studio");
   const links = [
-    { href: "/", label: "Learning", icon: "book" as const, active: !pathname.startsWith("/prepare") },
+    { href: "/", label: "Learning", icon: "book" as const, active: !pathname.startsWith("/prepare") && pathname !== "/review" },
+    { href: "/review", label: "JD 核心复习", icon: "layers" as const, active: pathname === "/review" },
     { href: "/prepare", label: "Preparation", icon: "message" as const, active: inPreparation },
     { href: "/prepare/profile", label: "My profile", icon: "user" as const, active: pathname.startsWith("/prepare/profile") },
   ];

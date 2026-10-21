@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { parseStudioBundle } from "../../src/modules/preparation/studio-model";
+import { getBehaviorMap } from "../../src/modules/preparation/behavior-map";
 
 function fixture() {
   return {
@@ -48,4 +49,17 @@ test("Studio import rejects profile files, malformed STAR and invalid module or 
   const noReadiness = fixture();
   delete (noReadiness.behavior.stories[0] as Partial<typeof noReadiness.behavior.stories[0]>).readiness;
   assert.throws(() => parseStudioBundle(JSON.stringify(noReadiness)), /状态/);
+});
+
+test("competency map preserves all questions, exposes gaps and rejects broken evidence links", () => {
+  const source = fixture();
+  const bundle = { ...source, behavior: { ...source.behavior,
+    questions: [...source.behavior.questions, { ...source.behavior.questions[0], id: "unmapped", answer: "[Add actual action]" }],
+    competencies: [{ id: "leadership", title: "Leadership", description: "Explain a real decision", practiceGoal: "Name your action", questionIds: ["qa-question"], storyIds: ["qa-story"] }],
+  } };
+  const map = getBehaviorMap(parseStudioBundle(JSON.stringify(bundle)));
+  assert.equal(map.questions.length, 2, "A question outside the competency list remains reachable through All");
+  assert.deepEqual(map.needsDetails.map((question) => question.id), ["unmapped"], "A ready label must not hide placeholders");
+  bundle.behavior.competencies[0].questionIds = ["missing"];
+  assert.throws(() => parseStudioBundle(JSON.stringify(bundle)), /不存在/);
 });

@@ -11,6 +11,7 @@ export type CatalogQuestion = { id: string; courseSlug: string; slug: string };
 type Category = "All courses" | "Backend" | "Java & Spring" | "React";
 
 const presentation: Record<string, { title: string; description: string; category: Category; order: number }> = {
+  "java-backend-review": { title: "JD Core Review", description: "逐项覆盖 Java、MySQL、Redis、RPC、系统设计、可靠性与支付。", category: "Backend", order: -1 },
   "backend-systems": { title: "Backend Systems", description: "Follow a request through services, queues, failures, and system capacity.", category: "Backend", order: 0 },
   "java-language": { title: "Java Language & OOP", description: "Learn core Java syntax and the principles of object-oriented programming.", category: "Java & Spring", order: 1 },
   "java-collections-generics-streams": { title: "Collections & Streams", description: "Work with collections, generics, and streams to organize and process data.", category: "Java & Spring", order: 2 },
@@ -38,6 +39,7 @@ function DiagramArrow({ x = 76, y = 42, width = 39 }: { x?: number; y?: number; 
 function CourseArt({ slug }: { slug: string }) {
   let art;
   switch (slug) {
+    case "java-backend-review":
     case "backend-systems": art = <><Servers x={9} y={16} /><DiagramArrow /><Database x={128} y={9} /></>; break;
     case "java-language": art = <><path d="M14 10h31l14 14v45H14ZM45 10v15h14M24 35h24M24 44h20M24 53h15" /><g stroke="#6389e6"><path d="M98 45h35c0 15-4 19-17 19s-18-4-18-19Zm35 2h6c12 0 7 12-7 12M91 70c15 7 36 7 50-1M114 34c-14-12 18-12 5-27M122 38c-8-10 18-12 11-25" /></g></>; break;
     case "java-collections-generics-streams": art = <><rect x="7" y="13" width="38" height="22" rx="3" fill="#e2f5ef" /><rect x="65" y="40" width="38" height="22" rx="3" fill="#e2f5ef" /><path d="M45 24h41v10M25 36v13h33m-5-5 5 5-5 5M108 50l28-14m-7-1 7 1-3 7" stroke="#8498e1" /><rect x="145" y="8" width="48" height="62" rx="5" /><path d="M154 21h7m9 0h14m-30 12h7m9 0h14m-30 12h7m9 0h14m-30 12h7m9 0h14" /></>; break;
@@ -83,6 +85,7 @@ export function CourseCatalog({ courses, questions }: { courses: readonly Course
 
   return <main id="main-content" tabIndex={-1} className="catalog-page ui-page">
     <header className="catalog-hero"><h1>What will you understand next?</h1><p>Build the concept. Explore the system. Explain it clearly.</p></header>
+    <Link href="/review" className="ui-card mb-5 flex flex-wrap items-center justify-between gap-3 p-5 text-brand"><span><strong>按 JD 复习 · 12 个技术方向</strong><span className="mt-1 block text-sm text-muted">从基础到支付：27 节核心课、中文讲解、英文回答与自测。无需登录即可学习。</span></span><Icon name="arrow-right" size={23} /></Link>
     <section className="catalog-continue ui-card" aria-labelledby="continue-heading">
       <div className="catalog-continue-copy"><h2 id="continue-heading">Continue learning</h2><p>{latest ? "Pick up with the lesson you most recently practiced." : "Start with a request. Follow it through the system."}</p><Link href={href} className="ui-button ui-button-primary">{latest ? "Continue lesson" : `Open ${currentTitle}`}<Icon name="arrow-right" size={17} /></Link></div>
       <div className="catalog-continue-diagram"><PipelineArt /><div className="catalog-progress" role="status">{!progress.authenticated ? <Link href="/login">Sign in to save your place</Link> : progress.syncState === "loading" ? <span>Loading your progress…</span> : progress.error ? <button type="button" onClick={progress.retry}>Progress unavailable · Retry</button> : <><span>{latest ? currentTitle : "No progress recorded yet"}</span><strong>{confident} / {current?.questionCount ?? 0} confident</strong></>}</div></div>

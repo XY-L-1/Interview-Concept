@@ -1,6 +1,7 @@
 import type { PublishedContentData } from "./model";
 import { backendCourse } from "./backend-course";
 import { javaGuideCourses } from "./java-guide";
+import { jdReviewCourse } from "./jd-review-course";
 
 const publishedAt = "2026-07-26T00:00:00.000Z";
 
@@ -506,10 +507,10 @@ const reactContent = {
 } satisfies PublishedContentData;
 
 export const publishedContent: PublishedContentData = {
-  courses: [...reactContent.courses, ...backendCourse.courses, ...javaGuideCourses.courses],
-  courseRevisions: [...reactContent.courseRevisions, ...backendCourse.courseRevisions, ...javaGuideCourses.courseRevisions],
-  sections: [...reactContent.sections, ...backendCourse.sections, ...javaGuideCourses.sections],
-  sectionRevisions: [...reactContent.sectionRevisions, ...backendCourse.sectionRevisions, ...javaGuideCourses.sectionRevisions],
-  questions: [...reactContent.questions, ...backendCourse.questions, ...javaGuideCourses.questions],
-  questionRevisions: [...reactContent.questionRevisions, ...backendCourse.questionRevisions, ...javaGuideCourses.questionRevisions],
+  courses: [...reactContent.courses, ...backendCourse.courses, ...javaGuideCourses.courses, ...jdReviewCourse.courses],
+  courseRevisions: [...reactContent.courseRevisions, ...backendCourse.courseRevisions, ...javaGuideCourses.courseRevisions, ...jdReviewCourse.courseRevisions],
+  sections: [...reactContent.sections, ...backendCourse.sections, ...javaGuideCourses.sections, ...jdReviewCourse.sections],
+  sectionRevisions: [...reactContent.sectionRevisions, ...backendCourse.sectionRevisions, ...javaGuideCourses.sectionRevisions, ...jdReviewCourse.sectionRevisions],
+  questions: [...reactContent.questions, ...backendCourse.questions, ...javaGuideCourses.questions, ...jdReviewCourse.questions],
+  questionRevisions: [...reactContent.questionRevisions, ...backendCourse.questionRevisions, ...javaGuideCourses.questionRevisions, ...jdReviewCourse.questionRevisions],
 };
