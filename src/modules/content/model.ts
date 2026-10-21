@@ -55,6 +55,12 @@ export type BilingualQuestionContent = Readonly<{
   chineseDeepDive: ChineseDeepDive;
   sources?: readonly { title: string; url: string }[];
   practice?: readonly { question: string; answer: string }[];
+  originalGuide?: Readonly<{
+    questionNumber: string;
+    sourceFile: string;
+    sourceLine: number;
+    blocks: readonly { labelZh: string; labelEn: string; zh: string; en: string }[];
+  }>;
 }>;
 
 export type CourseIdentity = Readonly<{

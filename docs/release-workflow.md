@@ -21,3 +21,19 @@ Keep personal exports outside this public repository. In the Interview workspace
 Stable profile facts retain their source, evidence status and contribution scope. Company and role context changes the emphasis, transitions and follow-up questions. It must not change historical facts or convert team behavior or an unverified claim into a personal accomplishment.
 
 The first private seed distinguishes the user's confirmed participation and team workflow from earlier analysis that still needs original-code checks. Review a candidate contribution and its evidence before changing its status. A role template is a writing aid, not verification of the underlying experience.
+
+## Restoring existing material
+
+The Java/Spring guide is imported by `scripts/import-java-guide.mjs` into a typed
+public snapshot, with eight courses and 160 questions. Original bilingual blocks
+and source hashes are retained; correction notices are separate from the source.
+The external Markdown is needed only to regenerate or locally verify fidelity,
+not to build or deploy the committed snapshot.
+
+The old Interview Studio is restored at `/prepare/studio`. Its complete private
+bundle stays outside this repository. Only generic runtime assets are published.
+Use real personal bundles on localhost for QA and fictional bundles on deployed
+origins. Verify story state, locked introduction, timer, quiz, save/reload, export,
+and clear after drafts have been written; ensure clearing does not resurrect
+progress through iframe teardown handlers. Old file:// progress is imported
+through the corresponding panel's existing progress transfer controls.

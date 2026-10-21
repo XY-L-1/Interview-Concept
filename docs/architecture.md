@@ -99,3 +99,16 @@ references. Separate company/role context changes ranking and interview prompts.
 Only evidenced personal contributions enter first-person drafts; team context,
 unverified claims and reflection notes remain separate. The public content module
 must never import personal JSON or use personal profile data in page metadata.
+
+`/prepare/studio` restores the existing offline practice application through a
+same-origin iframe. Only generic templates and reviewed scripts are public;
+the validated local JSON bundle is sent in memory after hydration through a
+source- and origin-checked message handshake. The standalone runtime blocks
+network connections and external embedded resources with CSP. Its original
+progress keys remain compatible. Before clearing data, the parent synchronously
+disposes the runtime so pending saves cannot recreate cleared records.
+
+The 160-question Java/Spring source snapshot is public generic learning content.
+Its originalGuide blocks preserve the original Chinese/English pairing rather
+than fabricating examples to fill the newer lesson format. Sources and separate
+correction notices remain visible without silently rewriting the original text.

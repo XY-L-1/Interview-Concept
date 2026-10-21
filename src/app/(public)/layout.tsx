@@ -41,8 +41,10 @@ export default function PublicLayout({
             <BrandMark />
             <span>Interview Concept</span>
           </Link>
-          <nav aria-label="Main navigation" className="flex items-center gap-5 text-sm font-medium">
+          <nav aria-label="Main navigation" className="flex flex-wrap items-center gap-x-5 gap-y-3 text-sm font-medium">
+            <Link href="/#courses-heading" className="text-muted hover:text-brand focus-visible:outline-2 focus-visible:outline-brand">All courses</Link>
             <Link href="/courses/backend-systems" className="text-muted hover:text-brand focus-visible:outline-2 focus-visible:outline-brand">Kafka &amp; Systems</Link>
+            <Link href="/prepare/studio" className="text-muted hover:text-brand focus-visible:outline-2 focus-visible:outline-brand">Stories &amp; Practice</Link>
             <Link href="/prepare" className="text-muted hover:text-brand focus-visible:outline-2 focus-visible:outline-brand">My preparation</Link>
           </nav>
         </div>

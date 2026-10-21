@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Reviewed standalone runtime migrated from the existing offline Studio.
+    "public/studio/**",
   ]),
 ]);
 

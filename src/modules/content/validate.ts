@@ -118,6 +118,17 @@ function assertQuestionContent(revision: QuestionRevision): void {
   const chinese = content.chineseDeepDive;
 
   assertLocalizedText(`${label} prompt`, content.prompt);
+  if (content.originalGuide) {
+    const guide = content.originalGuide;
+    assertNonEmptyText(`${label} original question number`, guide.questionNumber);
+    assertNonEmptyText(`${label} original source`, guide.sourceFile);
+    if (!Number.isInteger(guide.sourceLine) || guide.sourceLine < 1 || guide.blocks.length !== 4) {
+      throw new Error(`Invalid ${label} original guide structure`);
+    }
+    for (const block of guide.blocks) {
+      for (const [field, value] of Object.entries(block)) assertNonEmptyText(`${label} original ${field}`, value);
+    }
+  }
   assertNonEmptyText(`${label} English answer`, english.answer);
   assertTextList(`${label} English key points`, english.keyPoints);
 

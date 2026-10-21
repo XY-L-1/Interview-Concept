@@ -78,3 +78,19 @@ failures, round-trip export, provenance filtering, empty profiles, and role
 changes preserving facts. Browser checks should also cover import, explicit save,
 reload restoration, editing evidence labels, role switching, export and clear,
 including a failed import that preserves the previous workspace.
+
+## Existing Interview Studio
+
+`/prepare/studio` imports a separate `{schemaVersion:1, behavior, foundations}`
+bundle. This is intentionally distinct from the editable fact-profile schema:
+original STAR drafts, introduction, question IDs and `needs-details` states are
+retained, not promoted into verified profile facts. Import validates before
+replacing the in-memory bundle; explicit save uses `interview-studio:content:v1`.
+The original three `simple-ai-*-v1` keys store practice progress. Old file://
+records require export/import from the corresponding old/new panel.
+
+Only generic public runtime code is embedded in the same-origin iframe; the
+parent validates data and checks iframe source and origin. The runtime escapes
+dynamic text. Clear disables runtime persistence before removing data and
+progress keys and unmounting, preventing delayed saves from resurrecting notes.
+`tests/preparation/studio.test.ts` covers the schema and fact-boundary states.

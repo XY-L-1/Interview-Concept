@@ -1,5 +1,6 @@
 import type { PublishedContentData } from "./model";
 import { backendCourse } from "./backend-course";
+import { javaGuideCourses } from "./java-guide";
 
 const publishedAt = "2026-07-26T00:00:00.000Z";
 
@@ -505,10 +506,10 @@ const reactContent = {
 } satisfies PublishedContentData;
 
 export const publishedContent: PublishedContentData = {
-  courses: [...reactContent.courses, ...backendCourse.courses],
-  courseRevisions: [...reactContent.courseRevisions, ...backendCourse.courseRevisions],
-  sections: [...reactContent.sections, ...backendCourse.sections],
-  sectionRevisions: [...reactContent.sectionRevisions, ...backendCourse.sectionRevisions],
-  questions: [...reactContent.questions, ...backendCourse.questions],
-  questionRevisions: [...reactContent.questionRevisions, ...backendCourse.questionRevisions],
+  courses: [...reactContent.courses, ...backendCourse.courses, ...javaGuideCourses.courses],
+  courseRevisions: [...reactContent.courseRevisions, ...backendCourse.courseRevisions, ...javaGuideCourses.courseRevisions],
+  sections: [...reactContent.sections, ...backendCourse.sections, ...javaGuideCourses.sections],
+  sectionRevisions: [...reactContent.sectionRevisions, ...backendCourse.sectionRevisions, ...javaGuideCourses.sectionRevisions],
+  questions: [...reactContent.questions, ...backendCourse.questions, ...javaGuideCourses.questions],
+  questionRevisions: [...reactContent.questionRevisions, ...backendCourse.questionRevisions, ...javaGuideCourses.questionRevisions],
 };

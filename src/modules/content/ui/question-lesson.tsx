@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { BacklogExplorer } from "./backlog-explorer";
+import { OriginalGuide } from "./original-guide";
 import type {
   CodeExample,
   PublishedQuestionLesson,
@@ -221,10 +222,11 @@ export function QuestionLesson({
           <nav aria-label="Lesson sections" className="mt-5 flex flex-wrap gap-x-5 gap-y-3 text-sm font-medium text-brand">
             <a href="#chinese-answer-heading" className="hover:underline focus-visible:outline-2 focus-visible:outline-brand">中文深讲</a>
             <a href="#english-answer-heading" className="hover:underline focus-visible:outline-2 focus-visible:outline-brand">English answer</a>
-            {content.practice?.length ? <a href="#practice-heading" className="hover:underline focus-visible:outline-2 focus-visible:outline-brand">练习与自测</a> : null}
+            {content.practice?.length ? <a href="#practice-heading" className="hover:underline focus-visible:outline-2 focus-visible:outline-brand">{content.originalGuide ? "原文校对" : "练习与自测"}</a> : null}
           </nav>
         </header>
 
+        {content.originalGuide ? <OriginalGuide content={content} /> : <>
         <section
           lang="en"
           aria-labelledby="english-answer-heading"
@@ -380,10 +382,12 @@ export function QuestionLesson({
           </div>
         </section>
 
+        </>}
+
         {lesson.course.slug === "backend-systems" &&
         ["concurrency-throughput-latency", "backlog-and-bottlenecks"].includes(lesson.question.slug) ? <BacklogExplorer /> : null}
 
-        {content.practice?.length ? (
+        {!content.originalGuide && content.practice?.length ? (
           <section
             lang="zh-Hans"
             aria-labelledby="practice-heading"
