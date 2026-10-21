@@ -293,6 +293,8 @@ function WorkspaceEditor() {
         </article>
         {preparation.stories.map((story) => <article key={story.id} className="mt-5 rounded border border-line p-5">
           <h3 className="text-lg font-semibold text-ink">{story.title || "尚未命名的项目故事"}</h3>
+          {story.teamContext ? <div className="mt-4 border-l-2 border-line pl-4"><h4 className="text-sm font-semibold text-muted">System context · 团队流程</h4><p lang="en" className="mt-2 whitespace-pre-wrap text-base leading-8 text-body">{story.teamContext}</p></div> : null}
+          <h4 className="mt-4 text-sm font-semibold text-brand">My contribution · 个人贡献</h4>
           <p lang="en" className="mt-3 whitespace-pre-wrap text-base leading-8 text-body">{story.answer}</p>
           <p className="mt-3 text-xs text-muted">已纳入 {story.includedFactIds.length} 条个人事实；{story.excludedCount} 条团队、背景或待核实事实未进入第一人称回答。</p>
           {story.reflection ? <div className="mt-4 border-t border-line pt-4"><h4 className="text-sm font-semibold text-teaching">我的复盘笔记</h4><p className="mt-2 whitespace-pre-wrap text-sm leading-7 text-body">{story.reflection}</p></div> : null}

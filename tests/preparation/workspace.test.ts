@@ -71,6 +71,8 @@ test("only evidenced personal facts enter first-person answers", () => {
     }
   }
   assert.equal(result.stories[0].excludedCount, 3);
+  assert.equal(result.stories[0].teamContext, "TEAM_ONLY_CLAIM");
+  assert.equal(result.stories[0].teamContext.includes("UNVERIFIED_PERSONAL_CLAIM"), false);
 });
 
 test("changing role focus changes emphasis and follow-ups without changing profile facts", () => {

@@ -43,6 +43,10 @@ export function buildPreparation(workspace: PreparationWorkspace) {
       return {
         id: story.id,
         title: story.title,
+        teamContext: linked
+          .filter((fact) => fact.contribution === "team" && fact.provenance !== "needs-review")
+          .map((fact) => fact.text)
+          .join(" "),
         answer: personal.length
           ? [...personal.map((fact) => fact.text), template.transition, closing].filter(Boolean).join(" ")
           : "No confirmed personal contribution is linked to this story yet.",
