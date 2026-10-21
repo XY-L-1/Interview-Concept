@@ -1,0 +1,20 @@
+.diagram { container-type: inline-size; }
+.inlineDetail { margin-top: 8px; padding: 14px; background: #eef0ff; border-radius: 10px; }
+.desktopDetail { display: none; }
+.flow { display: flex; flex-direction: column; align-items: stretch; }
+.column { min-width: 0; flex: 1; border: 1px dashed #d8dfea; border-radius: 14px; padding: 12px; background: #f8fafc; }
+.node { display: block; width: 100%; padding: 13px; text-align: left; color: #25304a; background: white; border: 1px solid #dce2ed; border-radius: 10px; overflow-wrap: anywhere; cursor: pointer; transition: border-color .15s, background-color .15s; }
+.node:hover { border-color: #828fe4; background: #f5f6ff; }
+.node:focus-visible { outline: 3px solid #a6aff0; outline-offset: 3px; }
+.selected { border-color: #5968d7; box-shadow: 0 0 0 1px #5968d7; background: #f1f3ff; }
+.chip { display: inline-block; max-width: 100%; padding: 3px 6px; border-radius: 5px; font: 11px/1.6 ui-monospace, monospace; color: #42675e; background: #eaf4ef; overflow-wrap: anywhere; }
+.connection { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 10px 5px; color: #62718e; font-size: 11px; line-height: 1.5; text-align: center; }
+.arrow { display: block; font-size: 25px; line-height: 1; transform: rotate(90deg); }
+@container (min-width: 600px) {
+  .inlineDetail { display: none; }
+  .desktopDetail { display: block; }
+  .flow { flex-direction: row; }
+  .connection { flex: 0 0 64px; flex-direction: column; padding: 8px; }
+  .arrow { transform: none; }
+}
+@media (prefers-reduced-motion: reduce) { .node { transition: none; } }

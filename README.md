@@ -17,7 +17,11 @@ The catalog now has eleven public courses and 192 questions. `/review` organizes
 nineteen-lesson Java/backend review. It covers Java, Spring, MySQL, Redis, RPC,
 consistency, capacity, availability, debugging, quality, and payment lifecycles.
 Every new lesson includes Chinese teaching, an English answer, recall practice,
-and primary documentation links.
+and primary documentation links. All 27 core lessons now open with one short
+Chinese/English explanation and a clickable diagram. Diagram nodes explain the
+roles or steps, with explicit arrows and failure boundaries; mobile explanations
+appear beside the selected node. The full original answers remain below, and
+speaking mode starts with the short English version.
 
 Open `/courses/backend-systems` to learn. Public courses remain available without
 an account. Supabase email login protects `/prepare`, `/prepare/profile`, and

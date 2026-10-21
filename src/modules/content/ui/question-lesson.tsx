@@ -1,4 +1,5 @@
 import type { CodeExample, PublishedQuestionLesson, TeachingExample } from "../model";
+import { conceptPrimers } from "../concept-primers";
 import { LessonExperience } from "./lesson-experience";
 import { GuideText, OriginalGuide } from "./original-guide";
 
@@ -18,6 +19,7 @@ function TextList({ items }: { items: readonly string[] }) {
 export function QuestionLesson({ lesson }: { lesson: PublishedQuestionLesson }) {
   const { content } = lesson.revision;
   const chinese = content.chineseDeepDive;
+  const primer = ["backend-systems", "java-backend-review"].includes(lesson.course.slug) ? conceptPrimers[lesson.question.slug] : undefined;
   const examples = <div key="lesson-examples" className="space-y-5">{chinese.examples.map((example, index) => <Example key={index} example={example} />)}</div>;
 
   const understand = content.originalGuide ? <OriginalGuide key="paired-guide" content={content} /> : (
@@ -45,5 +47,5 @@ export function QuestionLesson({ lesson }: { lesson: PublishedQuestionLesson }) 
     </section>
   );
 
-  return <LessonExperience key={lesson.question.id} lesson={lesson} understand={understand} english={english} examples={examples} />;
+  return <LessonExperience key={lesson.question.id} lesson={lesson} primer={primer} understand={understand} english={english} examples={examples} />;
 }

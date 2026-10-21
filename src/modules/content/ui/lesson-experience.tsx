@@ -8,6 +8,8 @@ import { Icon } from "@/shared/ui/icons";
 import type { PublishedQuestionLesson } from "../model";
 import { BacklogExplorer } from "./backlog-explorer";
 import { KafkaExplorer } from "./kafka-explorer";
+import { ConceptDiagram } from "./concept-diagram";
+import type { ConceptPrimer } from "../concept-primers";
 import { GuideText } from "./original-guide";
 
 type Mode = "understand" | "explore" | "recall" | "english";
@@ -80,8 +82,8 @@ function SpeakingTimer() {
   </div>;
 }
 
-export function LessonExperience({ lesson, understand, english, examples }: { lesson: PublishedQuestionLesson; understand: ReactNode; english: ReactNode; examples: ReactNode }) {
-  const [mode, setMode] = useState<Mode>(lesson.question.slug === "why-and-when-kafka" ? "explore" : "understand");
+export function LessonExperience({ lesson, primer, understand, english, examples }: { lesson: PublishedQuestionLesson; primer?: ConceptPrimer; understand: ReactNode; english: ReactNode; examples: ReactNode }) {
+  const [mode, setMode] = useState<Mode>("understand");
   const hydrated = useSyncExternalStore(noSubscription, clientSnapshot, serverSnapshot);
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const progress = useLearningProgress(lesson.question.id);
@@ -108,15 +110,15 @@ export function LessonExperience({ lesson, understand, english, examples }: { le
 
     <div className="mt-5 grid min-w-0 gap-5 xl:grid-cols-[minmax(0,1fr)_250px]">
       <div className="min-w-0 space-y-5">
-        <div id="lesson-panel-understand" role="tabpanel" aria-labelledby="lesson-tab-understand" tabIndex={0} hidden={mode !== "understand"}>{understand}</div>
+        <div id="lesson-panel-understand" role="tabpanel" aria-labelledby="lesson-tab-understand" tabIndex={0} hidden={mode !== "understand"}><div className="space-y-5">{primer ? <ConceptDiagram primer={primer} /> : null}{understand}</div></div>
         <div id="lesson-panel-explore" role="tabpanel" aria-labelledby="lesson-tab-explore" tabIndex={0} hidden={mode !== "explore"}>
           {isBackend ? isCapacity ? <div className="[&>section]:mt-0 [&>section]:max-w-none [&>section]:rounded-2xl [&>section]:bg-white"><BacklogExplorer /></div> : <KafkaExplorer /> : <section className="rounded-2xl border border-line bg-white p-6"><h2 className="text-xl font-semibold text-ink">改变一个条件，预测会发生什么</h2><p className="mt-3 text-sm leading-7 text-muted">从原文示例或追问中选一个条件，先写出预测，再回到 Understand 核对机制与边界。</p>{content.originalGuide ? <div className="mt-4 rounded-xl bg-surface p-5"><h3 className="font-semibold text-ink">{content.originalGuide.blocks[2].labelZh}</h3><p className="mt-2 text-[15px] leading-8 text-body"><GuideText text={content.originalGuide.blocks[2].zh} /></p></div> : examples}<label htmlFor="explore-prediction" className="mt-5 block text-sm font-semibold text-ink">我的假设与预测（本页草稿）</label><textarea id="explore-prediction" rows={5} placeholder="如果把……改成……，我预计……，因为……" className="mt-2 w-full rounded-xl border border-line p-4 text-[15px] leading-7 text-body outline-none focus:border-brand focus:ring-2 focus:ring-brand/10" /></section>}
         </div>
         <div id="lesson-panel-recall" role="tabpanel" aria-labelledby="lesson-tab-recall" tabIndex={0} hidden={mode !== "recall"}><h2 id={content.originalGuide ? undefined : "practice-heading"} className="mb-4 text-xl font-semibold text-ink">Predict first · 先想，再看解释</h2><div className="space-y-4">{recall.map((item) => <RecallCard key={item.question} {...item} />)}</div></div>
-        <div id="lesson-panel-english" role="tabpanel" aria-labelledby="lesson-tab-english" tabIndex={0} hidden={mode !== "english"} className="space-y-5">{mode === "english" ? <SpeakingTimer /> : null}{english}</div>
+        <div id="lesson-panel-english" role="tabpanel" aria-labelledby="lesson-tab-english" tabIndex={0} hidden={mode !== "english"} className="space-y-5">{primer ? <div className="rounded-2xl border border-brand/20 bg-brand/5 p-6"><h2 className="text-sm font-semibold text-brand">Start with one sentence</h2><p lang="en" className="mt-3 text-lg leading-8 text-ink">{primer.en}</p><p className="mt-2 text-sm leading-7 text-muted">{primer.zh}</p></div> : null}{mode === "english" ? <SpeakingTimer /> : null}{english}</div>
       </div>
       <aside className="space-y-5 self-start">
-        <section className="rounded-2xl border border-line bg-white p-5"><div className="rounded-xl bg-teaching-soft p-4"><h2 className="flex items-center gap-2 font-semibold text-ink"><Icon name="layers" size={20} className="text-teaching" />Key idea</h2><p className="mt-3 text-sm leading-7 text-body"><GuideText text={content.originalGuide?.blocks[0].zh ?? content.chineseDeepDive.interviewSummary} /></p></div></section>
+        <section className="rounded-2xl border border-line bg-white p-5"><div className="rounded-xl bg-teaching-soft p-4"><h2 className="flex items-center gap-2 font-semibold text-ink"><Icon name="layers" size={20} className="text-teaching" />Key idea</h2><p className="mt-3 text-sm leading-7 text-body"><GuideText text={primer?.zh ?? content.originalGuide?.blocks[0].zh ?? content.chineseDeepDive.interviewSummary} /></p></div></section>
         <section className="rounded-2xl border border-line bg-white p-5"><h2 className="flex items-center gap-2 font-semibold text-ink"><Icon name="message" size={20} className="text-brand" />Explain it in English</h2><p className="mt-3 text-sm leading-7 text-muted">用自己的话说明概念、原因、例子与边界。</p><button type="button" onClick={() => setMode("english")} className="mt-4 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg bg-brand px-3 py-2 text-sm font-semibold text-white hover:bg-brand-strong focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"><Icon name="play" size={16} />Start speaking practice</button></section>
       </aside>
     </div>
