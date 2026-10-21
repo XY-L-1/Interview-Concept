@@ -2,13 +2,15 @@
 
 ## Current scope
 
-The project starts as one deployable Next.js application backed by one
-PostgreSQL database. It is a modular monolith: deployment stays simple while
-module ownership remains explicit in code and data access.
+The project starts as one deployable Next.js application and is designed to use
+one PostgreSQL database when persistence is introduced. It is a modular
+monolith: deployment stays simple while module ownership remains explicit in
+code and data access.
 
-This first pass establishes boundaries only. It deliberately does not include
-database tables, authentication configuration, a search engine, background
-jobs, or a component library.
+The first vertical slice implements anonymous reading through the `content`
+module using typed, file-backed published content. It deliberately does not yet
+include database tables, authentication configuration, a search engine,
+background jobs, or a component library.
 
 ## Dependency direction
 
@@ -43,6 +45,8 @@ The initial product modules are:
 - `learning`: private learner state.
 - `identity`: users, sessions, and authorization roles.
 - `ai`: non-canonical generated artifacts and provenance.
+- `preparation`: a browser-local personal fact profile, linked project stories,
+  and company/role rehearsal context. It does not send personal data to the server.
 
 ## Route groups
 
@@ -66,8 +70,32 @@ contain no public route until that feature is implemented.
 
 ## Versioning rule
 
-Stable course, section, and question identities will be separated from mutable
-editorial revisions. A published bilingual question revision will contain both
-the English interview answer and Chinese deep dive as one atomic version.
-Published revisions will be immutable; learner state will reference the stable
-question ID and record the last version seen.
+Stable course, section, and question identities are separated from immutable
+editorial revisions. Identities own immutable routing slugs and explicit course
+ownership, so learner references and public URLs are not rewritten by an
+editorial release. A course revision is an atomic release root: it stores
+catalog order plus ordered section revision IDs. Each section revision stores
+ordered question revision IDs. Each question revision stores its difficulty,
+English interview answer, and Chinese deep dive as one atomic version.
+
+Publishing creates any changed child revisions, creates a new course revision
+that fixes the complete curriculum tree, and then moves only the stable
+course's publication pointer. An older release therefore keeps its original
+section order, question membership, difficulty, and answers. Learner state
+references the stable question ID and may record the last question revision
+seen. Slug renaming is intentionally unsupported in the MVP; if it is added,
+old slugs must remain as redirect aliases.
+
+## Browser local preparation
+
+The public `/prepare` route serves an empty workspace and generic role templates.
+After hydration, its client component may read a versioned profile from the
+browser's localStorage. File import, validation, editing, answer composition and
+export run locally. Explicit save and clear actions control that browser's data;
+there is no authenticated cloud persistence or cross-device synchronization.
+
+The stable profile stores facts, contribution scope, evidence status and story
+references. Separate company/role context changes ranking and interview prompts.
+Only evidenced personal contributions enter first-person drafts; team context,
+unverified claims and reflection notes remain separate. The public content module
+must never import personal JSON or use personal profile data in page metadata.

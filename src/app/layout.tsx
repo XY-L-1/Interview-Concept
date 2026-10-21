@@ -13,9 +13,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Interview Learning Platform",
+  title: {
+    default: "Interview Concept",
+    template: "%s | Interview Concept",
+  },
   description:
-    "Bilingual software-engineering interview learning in English and Chinese.",
+    "Bilingual software-engineering interview learning with concise English answers and in-depth Chinese explanations.",
 };
 
 export default function RootLayout({
