@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { authConfig, configuredSiteOrigin } from "@/modules/identity/config";
 import { isSameOrigin, ownerFromVerifiedUser } from "@/modules/identity/policy";
 import { createAuthClient } from "@/modules/identity/server";
+import { loginEmailFailure } from "@/modules/identity/auth-errors";
 
 export type LoginState = { message: string; sent?: boolean };
 
@@ -29,7 +30,7 @@ export async function sendLoginEmail(_previous: LoginState, form: FormData): Pro
       email,
       options: { shouldCreateUser: false, emailRedirectTo: `${origin}/auth/callback` },
     });
-    if (error) return { message: "登录邮件发送失败。请稍后重试，或检查账户是否已开通。" };
+    if (error) return loginEmailFailure(error);
     return { sent: true, message: "登录邮件已发送。请在这个浏览器打开邮件中的链接；如果邮件提供验证码，也可在下方输入。" };
   } catch {
     return { message: "登录暂时不可用，请稍后重试。" };

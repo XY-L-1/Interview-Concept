@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { getOptionalOwner } from "@/modules/identity/server";
 import { Icon } from "@/shared/ui/icons";
+import { loginFailureMessage } from "@/modules/identity/auth-errors";
 import { LoginForm } from "./login-form";
 import "./login.css";
 
@@ -20,7 +21,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
         <p className="login-eyebrow">Your private workspace</p>
         <h1 id="login-heading">A place for your next step.</h1>
         <p className="login-description">登录个人备考空间，继续你的故事、笔记和学习进度。仅已开通的账户可访问，使用邮件链接登录，无需密码。</p>
-        {error && <p role="alert" className="login-alert">登录链接无效、已过期或账户无权访问。请重新发送登录邮件。</p>}
+        {error && <p role="alert" className="login-alert">{loginFailureMessage(error)}</p>}
         <LoginForm />
         <div className="login-footer"><Icon name="book" size={17} /><Link href="/">Explore the learning library <span aria-hidden="true">→</span></Link></div>
       </section>
