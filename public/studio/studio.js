@@ -38,6 +38,7 @@ window.startStudio = function(data) {
     if (updateHash) history.replaceState(null, '', '#' + section);
     requestAnimationFrame(() => { window.scrollTo(0, positions[section]); });
   }
+  window.selectStudioSection = select;
 
   tabs.forEach((tab, index) => {
     tab.addEventListener('click', () => select(tab.dataset.section));

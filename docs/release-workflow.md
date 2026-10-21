@@ -14,9 +14,11 @@ The backend systems course uses an anonymous translation workflow to teach reque
 
 ## Personal preparation data
 
-The /prepare page is a browser-local workspace. The website ships the tools and role lenses, without an embedded personal profile. Import a schemaVersion 1 JSON file to use personal facts, project stories and company context. Data is saved in that browser's localStorage and can be exported or cleared. It is not uploaded or synchronized between devices; this is not an authenticated cloud vault. Use a trusted browser profile and retain an exported backup if needed.
+The /prepare hub, /prepare/profile editor, and /prepare/studio library require Supabase email login by the configured, confirmed owner. They automatically load private account data; normal use does not require importing JSON. The website ships generic tools and role lenses, without an embedded personal profile or Studio payload. Owner checks protect the private API, and PostgreSQL RLS limits access to the owner's seeded document rows.
 
-Keep personal exports outside this public repository. In the Interview workspace, the private seed is stored under .private/ and excluded from the outer repository. Never add it to published-content, public/, test fixtures or a deployment upload.
+Private documents use the keys profile, studio, and progress. Profile facts retain schemaVersion 1; database versions advance independently. Profile and story edits save explicitly with an expected version. A stale write returns 409 without overwriting the cloud content, and the in-memory draft remains available for backup or an explicit reload. Question states and Studio progress synchronize automatically; independent progress edits can merge, while conflicts on the same field require an explicit choice.
+
+Keep personal seeds and exports outside this public repository. In the Interview workspace, private seeds are stored under .private/ and excluded from the outer repository. Never add them to published-content, public/, public test fixtures, or deployment assets. Provision private documents through the authorized database setup path, not by bundling them into the website. Do not place owner addresses, provider project identifiers, or credentials in public documentation.
 
 Stable profile facts retain their source, evidence status and contribution scope. Company and role context changes the emphasis, transitions and follow-up questions. It must not change historical facts or convert team behavior or an unverified claim into a personal accomplishment.
 
@@ -30,10 +32,16 @@ and source hashes are retained; correction notices are separate from the source.
 The external Markdown is needed only to regenerate or locally verify fidelity,
 not to build or deploy the committed snapshot.
 
-The old Interview Studio is restored at `/prepare/studio`. Its complete private
-bundle stays outside this repository. Only generic runtime assets are published.
-Use real personal bundles on localhost for QA and fictional bundles on deployed
-origins. Verify story state, locked introduction, timer, quiz, save/reload, export,
-and clear after drafts have been written; ensure clearing does not resurrect
-progress through iframe teardown handlers. Old file:// progress is imported
-through the corresponding panel's existing progress transfer controls.
+The old Interview Studio is restored at `/prepare/studio`. Its six original
+stories, 31 behavioral questions, 94 foundation questions, and locked introduction
+load from the private account document. Original drafts and incomplete states are
+not promoted into verified profile facts. The complete private seed stays outside
+this repository; only generic runtime assets are published. Use fictional data
+for public or unauthenticated deployment tests. Personal-data checks must remain
+inside the authorized owner session and private data service.
+
+Verify story state, introduction, timer, quiz, cloud save/reload, progress
+restoration, and conflict handling. Optional backup and legacy transfer controls
+remain available. Clearing old browser caches must not delete cloud documents or
+restore stale notes through iframe teardown handlers. Old file:// progress is
+imported through the corresponding panel's existing progress transfer controls.

@@ -25,6 +25,17 @@ learner notes and drafts and is therefore private browser data. Explicit export
 downloads JSON; source links are HTTPS links opened only by the learner with no
 referrer. CSP blocks connection requests and external embedded resources.
 
+The owner-authenticated parent may include a `progress` snapshot in the load
+message. In that mode `KIT` uses memory rather than localStorage and relays
+`{type:"interview-studio:progress", key, value}` to the exact same-origin parent.
+Only the parent performs authenticated persistence. An iframe acknowledgement
+means the player mounted; durable saves are acknowledged separately by the
+parent's API and shown in its sync status.
+
+The modern shell uses compact horizontal navigation, indigo accents, a light
+canvas and rounded content cards. The original advanced practice interactions
+remain intact, including story mapping, timing, quiz feedback and weak areas.
+
 Regenerate the runtime assets with:
 
 ```sh

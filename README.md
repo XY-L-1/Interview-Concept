@@ -14,21 +14,31 @@ including all four paired Chinese/English blocks, original numbering and source
 locations. Five documented wording corrections appear above the preserved text.
 The catalog now has ten public courses and 173 questions.
 
-Open `/courses/backend-systems` to learn, or `/prepare` to import and rehearse a
-private profile in your browser. The preparation workspace keeps factual history
-separate from company and role context. Personal JSON is not bundled with the
-site or uploaded to a server. It can be saved locally, exported and cleared;
-there is no cloud synchronization or authenticated personal-data service.
+Open `/courses/backend-systems` to learn. Public courses remain available without
+an account. Supabase email login protects `/prepare`, `/prepare/profile`, and
+`/prepare/studio`; only the configured, confirmed owner can access private data.
+After login, the workspace automatically loads the account's profile, stories,
+and progress. Normal use does not require importing a JSON file.
 
-Open `/prepare/studio` for the recovered offline Interview Studio. Import its
-private JSON bundle once, then save it to this browser to restore the original
-31 behavioral questions, six stories, locked introduction, 94 foundation
-questions, timer, quizzes, notes and progress transfer. The public runtime under
-`public/studio/` contains interaction code and empty templates only. Personal
-content must stay outside this public repository. Previous file:// progress
-requires export from the old HTML and import in the corresponding Studio panel.
+The private service stores three versioned documents: `profile`, `studio`, and
+`progress`. Profile facts remain separate from company and role context. Profile
+and story edits use explicit cloud saves; learning states and Studio practice
+progress synchronize through the learning provider. Conflicting document writes
+return 409 without overwriting the cloud version. Drafts remain in memory for an
+explicit reload or backup; progress can merge independent edits and asks the owner
+to resolve conflicts on the same field.
 
-The historical architecture HTML is linked from the catalog at
+The recovered Interview Studio preserves its original 31 behavioral questions,
+six stories, locked introduction, 94 foundation questions, timer, quizzes, notes,
+and progress transfer. Original drafts and incomplete story states are not
+automatically promoted into verified profile facts. The public runtime under
+`public/studio/` contains generic interaction code and empty templates only;
+private payloads are fetched after authorization. Keep private seed files and
+exports outside this public repository. Optional backup and old-record migration
+controls remain available; previous file:// progress requires export from the old
+HTML and import in the corresponding Studio panel.
+
+The historical architecture HTML remains available at
 `/guides/architecture.html`; its roadmap is explicitly labeled as a past plan.
 
 ## Stack
@@ -36,7 +46,7 @@ The historical architecture HTML is linked from the catalog at
 - Next.js App Router
 - React and TypeScript
 - Tailwind CSS
-- PostgreSQL planned as the source of truth
+- Supabase Auth and PostgreSQL with owner-scoped row-level security for private data
 
 ## Commands
 
@@ -64,6 +74,11 @@ tests/             Cross-module integration and end-to-end tests
 See [docs/architecture.md](docs/architecture.md) for module ownership and
 dependency rules, and [docs/release-workflow.md](docs/release-workflow.md) for the
 GitHub quality workflow and Vercel Git deployments. Use Node.js 24.
+See [src/modules/identity/README.md](src/modules/identity/README.md) for generic
+authentication configuration and document provisioning, and
+[src/modules/preparation/README.md](src/modules/preparation/README.md) for the
+profile schema and evidence boundaries. Configuration and private seeds do not
+belong in public course content or deployment assets.
 
 ## Working rules
 
